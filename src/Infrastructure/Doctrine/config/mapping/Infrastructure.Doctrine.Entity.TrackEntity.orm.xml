@@ -1,0 +1,23 @@
+<doctrine-mapping
+        xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+        https://raw.github.com/doctrine/doctrine2/master/doctrine-mapping.xsd">
+
+    <entity name="App\Infrastructure\Doctrine\Entity\TrackEntity" table="tracks">
+        <id name="uuid" column="uuid" length="36">
+            <generator strategy="NONE" />
+        </id>
+        <field name="trackNumber" type="integer" />
+        <field name="platform" length="10" nullable="true" />
+        <field name="train" nullable="true" />
+        <many-to-one
+            field="station"
+            target-entity="App\Infrastructure\Doctrine\Entity\StationEntity"
+            inversed-by="tracks">
+            <join-column name="station_id" referenced-column-name="uuid" nullable="false" />
+        </many-to-one>
+    </entity>
+
+</doctrine-mapping>
+

@@ -1,0 +1,16 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Tests\Behat\:
+        resource: '../tests/Behat/*'
+
+    App\Trainstation\Station\FindStation:
+        class: App\Infrastructure\InMemory\StationsInMemoryRepository
+
+    App\Trainstation\Station\DispatchTrainForTrack:
+        class: App\Infrastructure\InMemory\TracksInMemoryRepository
+
+    App\Trainstation\Station\DispatchTrainFromTrack:
+        class: App\Infrastructure\InMemory\TracksInMemoryRepository

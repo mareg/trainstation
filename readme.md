@@ -14,11 +14,14 @@ Tracks
 
 Trains
  - train has a train number (alphanumeric, examples: `IC345`, `RE3139` or `39131`) and a type
- (local, regional and high-speed)
- - inter city trains don't stop at the station and should use the track without platform (if
- one is available) or track with long platform
+ (`local`, `regional` and `fast`)
+ - fast trains don't stop at the station and should use the track without platform (preferred)
+ or track with a long platform 
  - regional trains stop at the long platform
  - local trains stop at any platform
+
+For simplicity, it does not matter if train is stopping or not, it still needs to occupy the
+track to get through the station.
 
 API endpoints:
 
@@ -26,7 +29,7 @@ API endpoints:
 
 `POST /station/{id}` with a payload
 ```json
-{ "train": {"number": "IC345", "type": "high-speed" }}
+{"number": "IC345", "type": "fast" }
 ```
 to specify that train has arrived and is about to enter the station
 Responses:
@@ -35,4 +38,3 @@ Responses:
 
 `PUT /station/{id}/tracks/{track_number}` to release the track used by a train
  * `204` status code confirming release of the platform
- * `400` if the platform is not occupied

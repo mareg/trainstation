@@ -1,0 +1,8 @@
+default:
+    suites:
+        default:
+            contexts:
+                - App\Tests\Behat\TrainstationContext
+
+    extensions:
+        FriendsOfBehat\SymfonyExtension: null

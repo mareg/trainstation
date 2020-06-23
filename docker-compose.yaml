@@ -1,0 +1,38 @@
+version: '3'
+
+networks:
+  web:
+    external:
+      name: traefik_proxy
+
+services:
+  api:
+    build: .
+    volumes:
+      - ./:/var/www/html
+    environment:
+      - APP_ENV=${APP_ENV}
+      - APP_SECRET=${APP_SECRET}
+      - DATABASE_URL=${DATABASE_URL}
+    labels:
+      - "traefik.http.routers.trainstation.rule=Host(`trainstation.docker.localhost`)"
+      - "traefik.docker.network=traefik_proxy"
+    links:
+      - db
+    depends_on:
+      - db
+    networks:
+      - default
+      - web
+
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_DATABASE: trainstation
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: trainstation
+      MYSQL_PASSWORD: trainstation
+    expose:
+      - 3306
+    volumes:
+      - ./docker/mysql/init.sql.gz:/docker-entrypoint-initdb.d/init.sql.gz
